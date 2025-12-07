@@ -15,7 +15,7 @@ import TUICallKit_Swift
 import TUICallKit
 #endif
 
-public let TUI_CALL_DEFAULT_AVATAR: String = "https://imgcache.qq.com/qcloud/public/static//avatar1_100.20191230.png"
+public let TUI_CALL_DEFAULT_AVATAR: String = "https://assets3.pgyer.com/image/view/admin_banner/9166c39fa132df9c04f22c0464cba1a4?t=123"
 public let PURCHASE_URL = "https://cloud.tencent.com/document/product/1640/79968"
 public let ACCESS_URL = "https://cloud.tencent.com/document/product/1640/81131"
 public let API_URL = "https://cloud.tencent.com/document/product/1640/79996"
@@ -35,8 +35,8 @@ class SettingsConfig {
     var floatWindow: Bool = true
     var enableVirtualBackground: Bool = true
     var enableIncomingBanner: Bool = true
-    var intRoomId: UInt32 = 0
-    var strRoomId: String = ""
+    var intRoomId: UInt32 = 11
+    var strRoomId: String = "11"
     var timeout: Int = 30
     var userData: String = ""
     let pushInfo: TUIOfflinePushInfo = {

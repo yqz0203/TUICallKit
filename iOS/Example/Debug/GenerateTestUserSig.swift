@@ -15,7 +15,7 @@ import zlib
  *
  * Enter Tencent Cloud IM to create an application, and you can see the SDKAppId, which is the unique identifier used by Tencent Cloud to distinguish customers.
  */
-let SDKAPPID: Int = 0
+let SDKAPPID: Int = 1600107091
 
 /**
  *  Signature expiration time, it is recommended not to set it too short
@@ -35,7 +35,7 @@ let EXPIRETIME: Int = 604_800
  * Note: This solution is only applicable to debugging demos.
  * Before going online officially, please migrate the UserSig calculation code and keys to your backend server to avoid traffic theft caused by encryption key leakage.
  */
-let SECRETKEY = ""
+let SECRETKEY = "ec244600e0bd6b58eebe9b89374e42e23caae1f59515bbc01d509dde2078ee26"
 
 class GenerateTestUserSig {
     
