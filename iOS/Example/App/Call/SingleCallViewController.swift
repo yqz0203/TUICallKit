@@ -236,10 +236,27 @@ public class SingleCallViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        let pushInfo: TUIOfflinePushInfo = TUIOfflinePushInfo()
+        pushInfo.title = ""
+        pushInfo.desc = "您有一个新的通话"
+        pushInfo.iOSPushType = .voIP
+        pushInfo.ignoreIOSBadge = false
+        pushInfo.iOSSound = "phone_ringing.mp3"
+        pushInfo.androidSound = "phone_ringing"
+        // OPPO必须设置ChannelID才可以收到推送消息，这个channelID需要和控制台一致
+        // OPPO must set a ChannelID to receive push messages. This channelID needs to be the same as the console.
+        pushInfo.androidOPPOChannelID = "tuikit"
+        // FCM channel ID, you need change PrivateConstants.java and set "fcmPushChannelId"
+        pushInfo.androidFCMChannelID = "fcm_push_channel"
+        // VIVO message type: 0-push message, 1-System message(have a higher delivery rate)
+        pushInfo.androidVIVOClassification = 1
+        // HuaWei message type: https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides/message-classification-0000001149358835
+        pushInfo.androidHuaWeiCategory = "IM"
+        
         let params = TUICallParams()
-        params.timeout = Int32(SettingsConfig.share.timeout)
-        params.userData = SettingsConfig.share.userData
-        params.offlinePushInfo = SettingsConfig.share.pushInfo
+        params.userData = SettingsConfig.share.userData.isEmpty ? "User Data" : SettingsConfig.share.userData
+        params.timeout = Int32(SettingsConfig.share.timeout > 0 ? SettingsConfig.share.timeout : 30)
+        params.offlinePushInfo = pushInfo
         
         let roomId = TUIRoomId()
         roomId.intRoomId = SettingsConfig.share.intRoomId
