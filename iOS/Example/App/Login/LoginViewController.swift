@@ -11,6 +11,7 @@ import Toast_Swift
 import WebKit
 import ImSDK_Plus
 import TUICore
+import TIMPush
 
 #if canImport(TUICallKit_Swift)
 import TUICallKit_Swift
@@ -51,11 +52,21 @@ class LoginViewController: UIViewController {
             self.loading.stopAnimating()
             SettingsConfig.share.userId = userId
             
+
+            
             V2TIMManager.sharedInstance()?.getUsersInfo([userId], succ: { [weak self] (infos) in
                 guard let self = self else { return }
                 if let info = infos?.first {
                     SettingsConfig.share.avatar = info.faceURL ?? TUI_CALL_DEFAULT_AVATAR
                     SettingsConfig.share.name = info.nickName ?? ""
+                    
+                    
+//                                // 登录成功后注册推送（已集成 IM，appKey 设置为 nil）
+//                                TIMPushManager.registerPush(Int32(SDKAPPID), appKey: SECRETKEY, succ: { (token) in
+//                                    print("Register push success after login, device token: \(token)")
+//                                }) { (code, desc) in
+//                                    print("Register push failed after login, code: \(code), desc: \(desc ?? "")")
+//                                }
                 }
                 self.loginSucc()
             }, fail: { (code, err) in

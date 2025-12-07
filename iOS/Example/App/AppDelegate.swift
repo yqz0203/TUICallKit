@@ -28,7 +28,7 @@ import TXLiteAVSDK_Professional
 /// You need to register a developer certificate with Apple, download and generate the certificate (P12 file) in their developer accounts, and upload the generated P12 file to the Tencent certificate console.
 /// The console will automatically generate a certificate ID and pass it to the `businessID` parameter.
 #if DEBUG
-let business_id: Int32 = 47213
+let business_id: Int32 = 47290
 #else
 let business_id: Int32 = 47212
 #endif
@@ -48,9 +48,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupPushKit()
         
         // 上报证书 ID
-        TUIVoIPExtension.setCertificateID(1234)
+        TUIVoIPExtension.setCertificateID(Int(business_id))
+        
+        // 设置推送 RegistrationID（需要在 registerPush 之前调用）
+        setupRegistrationID()
+        
+        // 请求推送权限并注册推送
+        registerForPushNotifications(application: application)
         
         return true
+    }
+    
+    func setupRegistrationID() {
+        // 生成设备唯一标识作为 RegistrationID
+        // 可以使用设备的 identifierForVendor 或自定义标识符
+        let registrationID: String
+        if let vendorID = UIDevice.current.identifierForVendor?.uuidString {
+            registrationID = vendorID
+        } else {
+            // 如果没有 vendorID，使用随机 UUID
+            registrationID = UUID().uuidString
+        }
+        
+        // 设置 RegistrationID
+        TIMPushManager.setRegistrationID(registrationID) {
+            print("Set RegistrationID success: \(registrationID)")
+        }
+    }
+    
+    func registerForPushNotifications(application: UIApplication) {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if granted {
+                DispatchQueue.main.async {
+                    application.registerForRemoteNotifications()
+                }
+            }
+        }
     }
     
     func setupPushKit() {
@@ -84,6 +118,24 @@ extension AppDelegate: TIMPushDelegate {
     //    func onRemoteNotificationReceived(_ notice: String?) -> Bool {
     //
     //    }
+}
+
+// MARK: - APNs Device Token Registration
+
+extension AppDelegate {
+    // 注册 APNs 设备令牌成功
+    // 注意：TIMPushManager.registerPush 应该在登录成功后调用（在 LoginViewController 中），
+    // 这里只保存 deviceToken，登录成功后会自动注册
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let token = deviceToken.map { String(format: "%02x", $0) }.joined()
+        print("APNs device token received: \(token)")
+        // TIMPushManager 会自动使用这个设备令牌，无需在此处手动注册
+    }
+    
+    // 注册 APNs 设备令牌失败
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register for remote notifications: \(error.localizedDescription)")
+    }
 }
 
 // MARK: - PushKit VoIP Push Configuration

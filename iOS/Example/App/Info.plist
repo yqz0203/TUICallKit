@@ -52,6 +52,7 @@
 		<string>audio</string>
 		<string>remote-notification</string>
 		<string>voip</string>
+		<string>fetch</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
