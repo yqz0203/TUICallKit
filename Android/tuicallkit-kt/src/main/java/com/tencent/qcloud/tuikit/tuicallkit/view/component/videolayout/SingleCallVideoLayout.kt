@@ -26,24 +26,24 @@ import com.trtc.tuikit.common.livedata.Observer
 class SingleCallVideoLayout(context: Context) : ConstraintLayout(context) {
     private lateinit var layoutRenderBig: FrameLayout
     private lateinit var layoutRenderSmall: FrameLayout
-    private lateinit var imageAvatar: ImageView
-    private lateinit var textUserName: TextView
+//    private lateinit var imageAvatar: ImageView
+//    private lateinit var textUserName: TextView
     private lateinit var imageBackground: ImageView
     private var videoViewSmall: VideoView? = null
     private var videoViewBig: VideoView? = null
 
     private var remoteUser: UserState.User = UserState.User()
 
-    private var remoteUserAvatarObserver = Observer<String> {
-        if (!it.isNullOrEmpty()) {
-            ImageLoader.load(context.applicationContext, imageAvatar, it, R.drawable.tuicallkit_ic_avatar)
-        }
-    }
-    private var remoteUserNicknameObserver = Observer<String> {
-        if (!it.isNullOrEmpty()) {
-            textUserName.text = it
-        }
-    }
+//    private var remoteUserAvatarObserver = Observer<String> {
+//        if (!it.isNullOrEmpty()) {
+//            ImageLoader.load(context.applicationContext, imageAvatar, it, R.drawable.tuicallkit_ic_avatar)
+//        }
+//    }
+//    private var remoteUserNicknameObserver = Observer<String> {
+//        if (!it.isNullOrEmpty()) {
+//            textUserName.text = it
+//        }
+//    }
     private var callStatusObserver = Observer<TUICallDefine.Status> {
         if (CallManager.instance.callState.mediaType.get() == TUICallDefine.MediaType.Audio) {
             return@Observer
@@ -82,15 +82,15 @@ class SingleCallVideoLayout(context: Context) : ConstraintLayout(context) {
     }
 
     private fun registerObserver() {
-        remoteUser.avatar.observe(remoteUserAvatarObserver)
-        remoteUser.nickname.observe(remoteUserNicknameObserver)
+//        remoteUser.avatar.observe(remoteUserAvatarObserver)
+//        remoteUser.nickname.observe(remoteUserNicknameObserver)
         CallManager.instance.userState.selfUser.get().callStatus.observe(callStatusObserver)
         CallManager.instance.viewState.isVirtualBackgroundOpened.observe(isVirtualBackgroundOpenedObserver)
     }
 
     private fun unregisterObserver() {
-        remoteUser.avatar.removeObserver(remoteUserAvatarObserver)
-        remoteUser.nickname.removeObserver(remoteUserNicknameObserver)
+//        remoteUser.avatar.removeObserver(remoteUserAvatarObserver)
+//        remoteUser.nickname.removeObserver(remoteUserNicknameObserver)
         CallManager.instance.userState.selfUser.get().callStatus.removeObserver(callStatusObserver)
         CallManager.instance.viewState.isVirtualBackgroundOpened.removeObserver(isVirtualBackgroundOpenedObserver)
     }
@@ -107,8 +107,8 @@ class SingleCallVideoLayout(context: Context) : ConstraintLayout(context) {
         layoutRenderSmall.setOnClickListener {
             switchRenderLayout()
         }
-        imageAvatar = findViewById(R.id.iv_user_avatar)
-        textUserName = findViewById(R.id.tv_user_name)
+//        imageAvatar = findViewById(R.id.iv_user_avatar)
+//        textUserName = findViewById(R.id.tv_user_name)
         imageBackground = findViewById(R.id.img_user_background)
 
         initVideoLayout()
@@ -140,13 +140,13 @@ class SingleCallVideoLayout(context: Context) : ConstraintLayout(context) {
     }
 
     private fun updateUserInfoView(show: Boolean) {
-        val visibility = if (show) VISIBLE else GONE
-        imageAvatar.visibility = visibility
-        textUserName.visibility = visibility
-        if (show) {
-            ImageLoader.load(context, imageAvatar, remoteUser.avatar.get(), R.drawable.tuicallkit_ic_avatar)
-            textUserName.text = remoteUser.nickname.get()
-        }
+//        val visibility = if (show) VISIBLE else GONE
+//        imageAvatar.visibility = visibility
+//        textUserName.visibility = visibility
+//        if (show) {
+//            ImageLoader.load(context, imageAvatar, remoteUser.avatar.get(), R.drawable.tuicallkit_ic_avatar)
+//            textUserName.text = remoteUser.nickname.get()
+//        }
     }
 
     private fun initBigVideoView() {

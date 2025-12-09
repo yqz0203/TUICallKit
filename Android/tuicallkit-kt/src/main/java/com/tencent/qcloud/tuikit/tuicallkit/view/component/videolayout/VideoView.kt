@@ -296,14 +296,14 @@ class VideoView(context: Context, userInfo: UserState.User) : RelativeLayout(con
     }
 
     private fun updateBackground() {
-        if (user.videoAvailable.get() || CallManager.instance.callState.scene.get() != TUICallDefine.Scene.SINGLE_CALL) {
-            imageBackground.visibility = View.GONE
-            return
-        }
-
-        imageBackground.visibility = View.VISIBLE
-        val option = ImageOptions.Builder().setPlaceImage(R.drawable.tuicallkit_ic_avatar).setBlurEffect(80f).build()
-        ImageLoader.load(context, imageBackground, user.avatar.get(), option)
-        imageBackground.setColorFilter(ContextCompat.getColor(context, R.color.tuicallkit_color_blur_mask))
+//        if (user.videoAvailable.get() || CallManager.instance.callState.scene.get() != TUICallDefine.Scene.SINGLE_CALL) {
+//            imageBackground.visibility = View.GONE
+//            return
+//        }
+//
+//        imageBackground.visibility = View.VISIBLE
+//        val option = ImageOptions.Builder().setPlaceImage(R.drawable.tuicallkit_ic_avatar).setBlurEffect(80f).build()
+//        ImageLoader.load(context, imageBackground, user.avatar.get(), option)
+//        imageBackground.setColorFilter(ContextCompat.getColor(context, R.color.tuicallkit_color_blur_mask))
     }
 }
